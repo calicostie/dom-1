@@ -6,7 +6,7 @@ window.dom = {
   },
   /*增*/
   after(node, node2) {
-    node.parentNode.insertBefore(node2, node.nextSibling); //在后面插入节点：即在该节点的下一个节点前插入一个"下一个节点”
+    node.parentNode.insertBefore(node2, node.nextSibling); //在该节点的下一个节点前插入一个"下一个节点”
   },
   before(node, node2) {
     node.parentNode.insertBefore(node2, node);
@@ -15,16 +15,16 @@ window.dom = {
     parent.appendChild(node);
   },
   wrap(node, parent) {
-    dom.before(node, parent); //在node前面加一个节点，现在两节点是兄弟关系
-    dom.append(parent, node); //在parent节点里加一个node子节点，现在两节点是父子关系了
+    dom.before(node, parent); //在node前面加一个节点，两节点为兄弟关系
+    dom.append(parent, node); //在parent节点里加一个node子节点，现在两节点为父子关系
   },
   /*删*/
   remove(node) {
     node.parentNode.removeChild(node);
-    return node; //为什么要返回？什么作用？可以不返回
+    return node; //可以不返回
   },
   empty(node) {
-    const { childNodes } = node; //这句等同于const childNodes = node.childNodes  简写形式
+    const { childNodes } = node; //const childNodes = node.childNodes  简写形式
     const array = [];
     // for (let i = 0; i < childNodes.length; i++) {
     //   dom.remove(childNodes[i]);
@@ -74,10 +74,10 @@ window.dom = {
   style(node, name, value) {
     if (arguments.length === 3) {
       //dom.style(div,'color','red')
-      //此时是要写入
+      //写入
       node.style[name] = value;
     } else if (arguments.length === 2) {
-      //此时是要读取
+      //读取
       if (typeof name === "string") {
         // dom.style(div,'color')
         return node.style[name];
@@ -111,7 +111,7 @@ window.dom = {
   },
   /*查*/
   find(selector, scope) {
-    //scope范围：在哪个标签里找属性
+    //scope范围查找
     return (scope || document).querySelectorAll(selector);
   }, //如果有范围就在范围里找，没范围就在全部document里找
   parent(node) {
@@ -121,7 +121,7 @@ window.dom = {
     return node.children;
   },
   siblings(node) {
-    return Array.from(node.parentNode.children).filter((n) => n !== node); //children是伪数组，首先要把它变为数组
+    return Array.from(node.parentNode.children).filter((n) => n !== node); //children是伪数组，首先把它变为数组
   },
   next(node) {
     let x = node.nextSibling;
@@ -134,7 +134,6 @@ window.dom = {
   previous(node) {
     let x = node.previousSibling;
     while (x && x.nodeType === 3) {
-      //x存在且x的类型为文本
       x = x.previousSibling;
     }
     return x;
